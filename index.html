@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#fff">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data:">
+  <title>Praktek Mobile Programming</title>
+  <link rel="stylesheet" href="core/framework7-bundle.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="apple-touch-icon" href="img/f7-icon-square.png">
+  <link rel="icon" href="img/f7-icon.png">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+  </div>
+  <script src="core/framework7-bundle.min.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="https://drive.crazycode.my.id/datajs/produk.js"></script>
+  <script>
+    let terjemahanbulan = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    let terjemahanhari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+
+    function tglsekarang(){
+      let x = new Date();
+      var hr, tgl, bln, thn;
+      hr = terjemahanhari[x.getDay()];
+      tgl = x.getDate() <= 9 ? `0${x.getDate()}` : x.getDate();
+      bln = terjemahanbulan[x.getMonth() + 1];
+      thn = x.getFullYear();
+      return `${hr}, ${tgl} ${bln} ${thn}`;
+    }
+
+    function jamsekarang(){
+      var x = new Date();
+      var jm, mn, dt;
+      jm = x.getHours() <= 9 ? `0${x.getHours()}` : x.getHours();
+      mn = x.getMinutes() <= 9 ? `0${x.getMinutes()}` : x.getMinutes();
+      dt = x.getSeconds() <= 9 ? `0${x.getSeconds()}` : x.getSeconds();
+      return `${jm}:${mn}:${dt}`;
+    }
+
+    setInterval(function(){
+      $("#bloktglsekarang").html(tglsekarang());
+      $("#blokjamsekarang").html(jamsekarang());
+    }, 1000);
+
+    function tampilproduk(){
+      let hasil = "";
+      let x;
+      for(x of dataproduk){
+        let nama = x.nama
+        let gambar = x.gambar;
+        hasil += `<div class="card">
+          <div class="card-header"><b>${nama}</b></div>
+          <div class="card-content card-content-padding">
+            <img src="${gambar}" style="border-radius: 15px; width: 100%;">
+            </div>
+          </div>`;
+      }
+      $("#blokproduk").html(hasil);
+    }
+
+  </script>
+
+ 
+
+</body>
+
+</html>
